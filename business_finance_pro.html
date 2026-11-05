@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Finance Pro | Corporate</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--ink:#172033;--muted:#748096;--line:#e6eaf1;--blue:#315efb;--nav:#111a2d;--green:#15966a;--red:#d94b5b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,"Segoe UI",Tahoma,sans-serif;color:var(--ink)}
+.app{display:flex;min-height:100vh}.side{width:245px;background:var(--nav);color:#fff;padding:24px 16px;flex-shrink:0}.brand{font-size:19px;font-weight:800;letter-spacing:.3px;margin:4px 8px 4px}.subbrand{font-size:11px;color:#9eabc2;margin:0 8px 28px}.nav button{width:100%;border:0;background:transparent;color:#b8c2d5;text-align:left;padding:12px 13px;border-radius:9px;margin:3px 0;cursor:pointer;font-size:14px}.nav button.active,.nav button:hover{background:#253454;color:#fff}.sidefoot{font-size:11px;color:#8e9bb2;margin:35px 8px;line-height:1.6}
+main{flex:1;min-width:0;padding:28px 32px;max-width:1500px;margin:auto;width:100%}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px}.eyebrow{font-size:11px;color:var(--blue);font-weight:800;letter-spacing:1.4px}.top h1{margin:5px 0;font-size:25px}.muted{color:var(--muted);font-size:13px}.pill{background:#eaf0ff;color:#315efb;border-radius:30px;padding:7px 11px;font-size:11px;font-weight:700}
+.page{display:none}.page.show{display:block}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 2px 8px #15264a06}.klabel{font-size:12px;color:var(--muted)}.kvalue{font-size:25px;font-weight:800;margin:8px 0 3px}.positive{color:var(--green)}.negative{color:var(--red)}
+.panel{margin-bottom:16px}.panel h3{font-size:15px;margin:0 0 14px}.row{display:flex;gap:12px;align-items:end;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:6px;min-width:140px;flex:1}.field label{font-size:12px;color:#59657a;font-weight:650}input,select,textarea{width:100%;border:1px solid #dce2ec;border-radius:8px;padding:10px 11px;background:#fff;color:var(--ink);font:inherit;font-size:13px;min-height:39px}input:focus,select:focus{outline:2px solid #cbd6ff;border-color:var(--blue)}button.primary,.btn{background:var(--blue);color:#fff;border:0;border-radius:8px;padding:10px 15px;font-weight:700;cursor:pointer;font-size:13px}.btn.secondary{background:#eef2f8;color:#39465d}.btn.danger{background:#fff0f1;color:var(--red)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:11px 9px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:#68758b;font-weight:700;background:#fafbfe}td.num,th.num{text-align:right}.tablewrap{overflow:auto}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.result{background:#f4f7ff;border:1px solid #e0e8ff;border-radius:12px;padding:16px}.result strong{font-size:23px;display:block;margin-top:5px}.hint{font-size:11px;color:var(--muted);line-height:1.6;margin-top:10px}.bar{height:9px;background:#edf0f6;border-radius:20px;overflow:hidden}.bar span{display:block;height:100%;background:var(--blue);width:0}.notice{padding:12px 14px;background:#fff8e8;border:1px solid #f4e4b8;border-radius:10px;color:#77591b;font-size:12px;line-height:1.6;margin-bottom:16px}
+.chart{display:flex;align-items:end;gap:9px;height:150px;padding:10px 4px 0;border-bottom:1px solid var(--line)}.barcol{flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;height:100%;gap:6px}.barcol i{width:100%;max-width:34px;background:#7c99ff;border-radius:5px 5px 0 0;min-height:2px}.barcol small{font-size:10px;color:var(--muted)}
+@media(max-width:950px){.side{width:190px}.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.app{display:block}.side{width:100%;padding:14px}.brand{display:inline-block}.subbrand{display:inline-block;margin:0 0 0 8px}.nav{display:flex;overflow:auto;gap:4px}.nav button{white-space:nowrap;width:auto;padding:9px}.sidefoot{display:none}main{padding:18px 13px}.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.kvalue{font-size:19px}.grid2{grid-template-columns:1fr}.top h1{font-size:21px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<div class="brand">BUSINESS FINANCE PRO</div><div class="subbrand">CORPORATE EDITION · THAILAND</div>
+<div class="nav">
+<button class="active" data-page="dashboard">▦ ภาพรวมธุรกิจ</button>
+<button data-page="pricing">⌗ คำนวณราคาขาย</button>
+<button data-page="records">▤ รายรับ–รายจ่าย</button>
+<button data-page="tax">฿ ภาษี & VAT</button>
+<button data-page="import">⇧ Import / Export</button>
+<button data-page="settings">⚙ ตั้งค่าบริษัท</button>
+</div>
+<div class="sidefoot">ข้อมูลจัดเก็บใน Browser เครื่องนี้<br>ควร Export Backup เป็นประจำ</div>
+</aside>
+<main>
+<div class="top"><div><div class="eyebrow">FINANCIAL CONTROL CENTER</div><h1 id="pageTitle">ภาพรวมธุรกิจ</h1><div class="muted" id="companyLabel">Corporate Finance · Thailand</div></div><span class="pill">LOCAL WORKSPACE</span></div>
+<section class="page show" id="dashboard">
+<div class="row" style="margin-bottom:14px"><div class="field" style="max-width:190px"><label>ปีบัญชี</label><select id="dashYear"></select></div><div class="field" style="max-width:190px"><label>เดือน</label><select id="dashMonth"><option value="all">ทั้งปี</option></select></div></div>
+<div class="cards">
+<div class="card"><div class="klabel">รายได้รวม</div><div class="kvalue" id="dRevenue">฿0</div><div class="muted">ยอดขายก่อนหักค่าใช้จ่าย</div></div>
+<div class="card"><div class="klabel">ต้นทุนสินค้า</div><div class="kvalue" id="dCogs">฿0</div><div class="muted">Cost of goods sold</div></div>
+<div class="card"><div class="klabel">ค่าใช้จ่ายดำเนินงาน</div><div class="kvalue" id="dExpense">฿0</div><div class="muted">Operating expenses</div></div>
+<div class="card"><div class="klabel">กำไรโดยประมาณ</div><div class="kvalue" id="dProfit">฿0</div><div class="muted">ก่อนปรับปรุงทางภาษี</div></div>
+</div>
+<div class="grid2"><div class="panel"><h3>รายได้รายเดือน</h3><div class="chart" id="monthChart"></div></div><div class="panel"><h3>สรุปแยก Marketplace</h3><div class="tablewrap"><table><thead><tr><th>Platform</th><th class="num">Revenue</th><th class="num">Share</th></tr></thead><tbody id="platformTable"></tbody></table></div></div></div>
+<div class="panel"><h3>รายการล่าสุด</h3><div class="tablewrap"><table><thead><tr><th>วันที่</th><th>ประเภท</th><th>รายละเอียด</th><th>ช่องทาง</th><th class="num">จำนวนเงิน</th></tr></thead><tbody id="recentRows"></tbody></table></div></div>
+</section>
+<section class="page" id="pricing">
+<div class="notice">ใส่ต้นทุนต่อชิ้นและอัตราค่าธรรมเนียมจริงของแต่ละแคมเปญ ระบบคำนวณราคาขายเพื่อให้ได้ Margin เป้าหมาย โดยคิดค่าธรรมเนียมเป็น % ของราคาขาย</div>
+<div class="panel"><h3>ข้อมูลสินค้าและเป้าหมาย</h3><div class="row">
+<div class="field"><label>ชื่อสินค้า / SKU</label><input id="pName" placeholder="เช่น OCHD-LT701"></div>
+<div class="field"><label>ต้นทุนสินค้า (บาท)</label><input id="pCost" type="number" value="5090"></div>
+<div class="field"><label>กำไรเป้าหมาย (%)</label><input id="pMargin" type="number" value="20" step=".1"></div>
+<div class="field"><label>ราคาขายที่ต้องการ (บาท)</label><input id="pManual" type="number" placeholder="ใส่เพื่อเช็ก Margin"></div>
+</div></div>
+<div class="panel"><h3>ตั้งค่าค่าธรรมเนียม (%)</h3><div class="row">
+<div class="field"><label>Platform fee</label><input id="pPlatform" type="number" value="3.21" step=".01"></div>
+<div class="field"><label>Commission</label><input id="pCommission" type="number" value="9.63" step=".01"></div>
+<div class="field"><label>Growth / Program fee</label><input id="pGrowth" type="number" value="8.03" step=".01"></div>
+<div class="field"><label>Affiliate</label><input id="pAffiliate" type="number" value="10" step=".01"></div>
+<div class="field"><label>Ads (% ของยอดขาย)</label><input id="pAds" type="number" value="5" step=".01"></div>
+<div class="field"><label>Operation cost (%)</label><input id="pOps" type="number" value="3" step=".01"></div>
+<div class="field"><label>ค่าใช้จ่ายคงที่ต่อออเดอร์</label><input id="pFixed" type="number" value="1.07" step=".01"></div>
+<div class="field"><label>ส่วนลดร้าน (%)</label><input id="pDiscount" type="number" value="0" step=".01"></div>
+</div><div class="actions"><button class="primary" id="calcPrice">คำนวณราคาขาย</button><button class="btn secondary" id="savePrice">บันทึกเป็นรายการสินค้า CSV</button></div></div>
+<div class="grid2"><div class="result"><div class="klabel">ราคาขายแนะนำ (ก่อนส่วนลด)</div><strong id="recommended">฿0</strong><div class="hint" id="recommendHint">คำนวณจาก Target Margin</div></div><div class="result"><div class="klabel">กำไรต่อชิ้น ณ ราคาที่แนะนำ</div><strong id="unitProfit">฿0</strong><div class="hint" id="unitMargin">Margin 0%</div></div></div>
+<div class="panel" style="margin-top:16px"><h3>ตรวจสอบราคาที่กรอก</h3><div class="tablewrap"><table><tbody id="priceBreakdown"></tbody></table></div></div>
+</section>
+<section class="page" id="records">
+<div class="panel"><h3>เพิ่มรายการรายรับ / รายจ่าย</h3><div class="row">
+<div class="field"><label>วันที่</label><input id="rDate" type="date"></div>
+<div class="field"><label>ประเภท</label><select id="rType"><option value="revenue">รายได้จากการขาย</option><option value="cogs">ต้นทุนสินค้า (COGS)</option><option value="expense">ค่าใช้จ่ายดำเนินงาน</option><option value="inputvat">ภาษีซื้อ (Input VAT)</option><option value="outputvat">ภาษีขาย (Output VAT)</option></select></div>
+<div class="field"><label>รายละเอียด</label><input id="rDesc" placeholder="รายละเอียด / เลขที่เอกสาร"></div>
+<div class="field"><label>Marketplace</label><select id="rPlatform"><option>ทั่วไป</option><option>TikTok Shop</option><option>Shopee</option><option>Lazada</option></select></div>
+<div class="field"><label>จำนวนเงิน (บาท)</label><input id="rAmount" type="number" min="0" step=".01"></div>
+</div><div class="actions"><button class="primary" id="addRecord">เพิ่มรายการ</button></div></div>
+<div class="panel"><div class="row" style="justify-content:space-between"><h3>บัญชีรายการทั้งหมด</h3><div class="field" style="max-width:180px"><label>กรองตามเดือน</label><input id="recordMonth" type="month"></div></div><div class="tablewrap"><table><thead><tr><th>วันที่</th><th>ประเภท</th><th>รายละเอียด</th><th>Marketplace</th><th class="num">จำนวนเงิน</th><th></th></tr></thead><tbody id="recordRows"></tbody></table></div></div>
+</section>
+<section class="page" id="tax">
+<div class="notice">ตัวเลขเป็นประมาณการเพื่อวางแผนเท่านั้น กำไรทางบัญชีไม่เท่ากับกำไรสุทธิทางภาษี ต้องปรับปรุงรายจ่ายต้องห้าม ค่าเสื่อมราคา ขาดทุนสะสม และรายการภาษีตามเอกสารจริงก่อนยื่นแบบ</div>
+<div class="panel"><h3>ตั้งค่าภาษีบริษัท</h3><div class="row">
+<div class="field"><label>ทุนชำระแล้ว ณ วันสิ้นรอบ (บาท)</label><input id="paidCapital" type="number" value="5000000"></div>
+<div class="field"><label>รายได้จากขาย/บริการทั้งปี (บาท)</label><input id="annualIncome" type="number" value="0" readonly></div>
+<div class="field"><label>จดทะเบียน VAT หรือไม่</label><select id="vatRegistered"><option value="yes">จด VAT</option><option value="no">ยังไม่จด VAT</option></select></div>
+<div class="field"><label>อัตรา VAT (%)</label><input id="vatRate" type="number" value="7" step=".1"></div>
+<div class="field"><label>ภาษีเงินได้นิติบุคคลแบบ</label><select id="citMode"><option value="standard">บริษัททั่วไป 20%</option><option value="sme">SME (เข้าเงื่อนไขทุน ≤ 5 ลบ. และรายได้ ≤ 30 ลบ.)</option></select></div>
+<div class="field"><label>ภาษีหัก ณ ที่จ่าย / ภาษีชำระล่วงหน้า</label><input id="taxCredit" type="number" value="0"></div>
+<div class="field"><label>กำไร/ขาดทุนสะสมทางภาษีที่นำมาใช้ได้</label><input id="lossCarry" type="number" value="0"></div>
+</div><div class="actions"><button class="primary" id="calcTax">คำนวณภาษี</button></div></div>
+<div class="cards">
+<div class="card"><div class="klabel">กำไรก่อนภาษี (ประมาณการ)</div><div class="kvalue" id="tProfit">฿0</div></div>
+<div class="card"><div class="klabel">ภาษีเงินได้นิติบุคคล</div><div class="kvalue" id="tCIT">฿0</div></div>
+<div class="card"><div class="klabel">VAT สุทธิประมาณการ</div><div class="kvalue" id="tVAT">฿0</div></div>
+<div class="card"><div class="klabel">ภาษีคงเหลือหลังเครดิต</div><div class="kvalue" id="tDue">฿0</div></div>
+</div>
+<div class="panel"><h3>รายละเอียดประมาณการภาษี</h3><div class="tablewrap"><table><tbody id="taxDetails"></tbody></table></div><p class="hint">VAT คำนวณจากรายการภาษีขายลบภาษีซื้อที่บันทึกไว้เท่านั้น ไม่ได้อนุมาน VAT จากยอดขาย/ค่าใช้จ่ายโดยอัตโนมัติ ต้องบันทึกยอด VAT จากใบกำกับภาษีที่ถูกต้อง</p></div>
+</section>
+<section class="page" id="import">
+<div class="panel"><h3>Import Excel / CSV</h3><p class="muted">รองรับ .xlsx, .xls และ .csv (ไฟล์ Excel ต้องมี Sheet แรกเป็นข้อมูล) เลือกประเภทข้อมูลก่อนนำเข้า</p>
+<div class="row"><div class="field"><label>ประเภทข้อมูลที่จะนำเข้า</label><select id="importType"><option value="records">รายการรายรับ–รายจ่าย</option><option value="products">รายการสินค้า / ต้นทุน</option></select></div><div class="field"><label>เลือกไฟล์</label><input id="fileInput" type="file" accept=".xlsx,.xls,.csv"></div></div>
+<div class="hint">รายการบัญชี: วันที่, ประเภท (revenue/cogs/expense/inputvat/outputvat), รายละเอียด, Marketplace, จำนวนเงิน<br>สินค้า: SKU, ชื่อสินค้า, ต้นทุน, ราคาขาย</div><div class="actions"><button class="primary" id="importBtn">นำเข้าไฟล์</button><button class="btn secondary" id="templateBtn">ดาวน์โหลด Template CSV</button><button class="btn secondary" id="backupBtn">Export Backup JSON</button><label class="btn secondary" for="restoreInput">Restore Backup JSON</label><input id="restoreInput" type="file" accept=".json" style="display:none"></div><div id="importStatus" class="hint"></div></div>
+<div class="panel"><h3>ข้อมูลสินค้า / ต้นทุน</h3><div class="tablewrap"><table><thead><tr><th>SKU</th><th>ชื่อสินค้า</th><th class="num">ต้นทุน</th><th class="num">ราคาขาย</th></tr></thead><tbody id="productRows"></tbody></table></div></div>
+</section>
+<section class="page" id="settings">
+<div class="panel"><h3>ข้อมูลบริษัทและการจัดเก็บ</h3><div class="row">
+<div class="field"><label>ชื่อบริษัท</label><input id="companyName" placeholder="บริษัท ... จำกัด"></div>
+<div class="field"><label>เลขประจำตัวผู้เสียภาษี (เก็บในเครื่องนี้)</label><input id="taxId" placeholder="13 หลัก"></div>
+<div class="field"><label>ปีบัญชีเริ่มต้น</label><select id="fiscalStart"><option value="1">มกราคม</option><option value="4">เมษายน</option><option value="7">กรกฎาคม</option><option value="10">ตุลาคม</option></select></div>
+</div><div class="actions"><button class="primary" id="saveSettings">บันทึกการตั้งค่า</button><button class="btn danger" id="clearData">ล้างข้อมูลทั้งหมด</button></div><p class="hint">ข้อมูลถูกเก็บด้วย Local Storage ใน Browser เครื่องนี้เท่านั้น ไม่ได้ส่งขึ้น Server หากล้างข้อมูล Browser เปลี่ยนเครื่อง หรือใช้ Incognito ข้อมูลอาจหาย ควร Export Backup JSON เป็นประจำ</p></div>
+<div class="panel"><h3>ข้อจำกัดของเวอร์ชันนี้</h3><ul class="hint"><li>เป็นเครื่องมือบันทึกและประมาณการ ไม่ใช่ระบบบัญชีเต็มรูปแบบหรือระบบยื่นภาษี</li><li>ยังไม่มี Login, Cloud Database, Multi-user และการเชื่อม API Marketplace</li><li>การ Import ใช้ชื่อคอลัมน์ตาม Template และควรตรวจข้อมูลหลังนำเข้า</li><li>ต้องแยกยอดขาย, ส่วนลด, ค่าธรรมเนียมแพลตฟอร์ม, คืนสินค้า และ VAT ตามรายงานต้นทางเพื่อให้กำไรแม่นยำ</li></ul></div>
+</section>
+</main></div>
+<script>
+const KEY='bfp_corp_v1';let db=JSON.parse(localStorage.getItem(KEY)||'{"records":[],"products":[],"settings":{}}');
+const $=id=>document.getElementById(id), money=n=>'฿'+(Number(n)||0).toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2}),num=id=>Number($(id).value)||0;
+function save(){localStorage.setItem(KEY,JSON.stringify(db));render()}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+const typeName={revenue:'รายได้',cogs:'ต้นทุนสินค้า',expense:'ค่าใช้จ่าย',inputvat:'ภาษีซื้อ',outputvat:'ภาษีขาย'};
+function sum(type,year,month){return db.records.filter(r=>r.type===type&&(!year||r.date?.startsWith(year))&&(!month||r.date?.slice(0,7)===year+'-'+month)).reduce((a,r)=>a+(+r.amount||0),0)}
+function allsum(types,year,month){return types.reduce((a,t)=>a+sum(t,year,month),0)}
+function render(){
+const now=new Date(),yr=String(now.getFullYear());let years=[...new Set([yr,...db.records.map(r=>r.date?.slice(0,4)).filter(Boolean)])].sort().reverse();
+$('dashYear').innerHTML=years.map(y=>`<option>${y}</option>`).join('');$('dashYear').value=years.includes($('dashYear').value)?$('dashYear').value:yr;
+$('dashMonth').innerHTML='<option value="all">ทั้งปี</option>'+Array.from({length:12},(_,i)=>`<option value="${String(i+1).padStart(2,'0')}">${i+1}月</option>`).join('');
+let y=$('dashYear').value,m=$('dashMonth').value==='all'?'':$('dashMonth').value;
+let rev=sum('revenue',y,m),cogs=sum('cogs',y,m),exp=sum('expense',y,m),profit=rev-cogs-exp;
+$('dRevenue').textContent=money(rev);$('dCogs').textContent=money(cogs);$('dExpense').textContent=money(exp);$('dProfit').textContent=money(profit);$('dProfit').className='kvalue '+(profit>=0?'positive':'negative');
+$('annualIncome').value=sum('revenue',y,'');
+let vals=Array.from({length:12},(_,i)=>sum('revenue',y,String(i+1).padStart(2,'0'))),max=Math.max(1,...vals);
+$('monthChart').innerHTML=vals.map((v,i)=>`<div class="barcol"><i style="height:${Math.max(2,v/max*100)}%"></i><small>${i+1}</small></div>`).join('');
+let plats=['TikTok Shop','Shopee','Lazada','ทั่วไป'];$('platformTable').innerHTML=plats.map(p=>{let v=db.records.filter(r=>r.type==='revenue'&&r.date?.startsWith(y)&&(!m||r.date.slice(5,7)===m)&&r.platform===p).reduce((a,r)=>a+(+r.amount||0),0);return `<tr><td>${p}</td><td class="num">${money(v)}</td><td class="num">${rev?(v/rev*100).toFixed(1):'0.0'}%</td></tr>`}).join('');
+$('recentRows').innerHTML=db.records.slice().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,6).map(r=>`<tr><td>${esc(r.date)}</td><td>${typeName[r.type]||r.type}</td><td>${esc(r.desc)}</td><td>${esc(r.platform)}</td><td class="num">${money(r.amount)}</td></tr>`).join('')||'<tr><td colspan="5">ยังไม่มีข้อมูล</td></tr>';
+$('recordRows').innerHTML=db.records.map((r,i)=>({...r,i})).filter(r=>!$('recordMonth').value||r.date?.startsWith($('recordMonth').value)).sort((a,b)=>b.date.localeCompare(a.date)).map(r=>`<tr><td>${esc(r.date)}</td><td>${typeName[r.type]||r.type}</td><td>${esc(r.desc)}</td><td>${esc(r.platform)}</td><td class="num">${money(r.amount)}</td><td><button class="btn danger" onclick="delRecord(${r.i})">ลบ</button></td></tr>`).join('')||'<tr><td colspan="6">ยังไม่มีข้อมูล</td></tr>';
+$('productRows').innerHTML=db.products.map(p=>`<tr><td>${esc(p.sku)}</td><td>${esc(p.name)}</td><td class="num">${money(p.cost)}</td><td class="num">${money(p.price)}</td></tr>`).join('')||'<tr><td colspan="4">ยังไม่มีข้อมูลสินค้า</td></tr>';
+$('companyLabel').textContent=(db.settings.company||'Corporate Finance')+' · Thailand';$('companyName').value=db.settings.company||'';$('taxId').value=db.settings.taxId||'';$('fiscalStart').value=db.settings.fiscalStart||'1';
+calcTax();
+}
+function delRecord(i){if(confirm('ลบรายการนี้?')){db.records.splice(i,1);save()}}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('show',p.id===b.dataset.page));$('pageTitle').textContent=b.textContent.trim()});
+$('dashYear').onchange=render;$('dashMonth').onchange=render;$('recordMonth').onchange=render;
+$('rDate').value=new Date().toISOString().slice(0,10);
+$('addRecord').onclick=()=>{let amount=num('rAmount');if(!$('rDate').value||!amount){alert('กรุณาระบุวันที่และจำนวนเงิน');return}db.records.push({date:$('rDate').value,type:$('rType').value,desc:$('rDesc').value,platform:$('rPlatform').value,amount});$('rDesc').value='';$('rAmount').value='';save()};
+function pricing(){let cost=num('pCost'),margin=num('pMargin')/100,fees=['pPlatform','pCommission','pGrowth','pAffiliate','pAds','pOps'].reduce((a,id)=>a+num(id)/100,0),fixed=num('pFixed'),discount=num('pDiscount')/100;
+let netFactor=1-discount, den=netFactor*(1-fees-margin);let price=den>0?(cost+fixed)/den:0;price=Math.ceil(price);let sale=num('pManual')||price,netSale=sale*(1-discount),profit=netSale*(1-fees)-cost-fixed,actual=netSale?profit/netSale*100:0;
+$('recommended').textContent=money(price);$('unitProfit').textContent=money(price*(1-discount)*(1-fees)-cost-fixed);$('unitMargin').textContent='Margin '+(((price*(1-discount)*(1-fees)-cost-fixed)/(price*(1-discount)||1))*100).toFixed(2)+'%';
+$('recommendHint').textContent='รวมค่าธรรมเนียม '+(fees*100).toFixed(2)+'% และค่าใช้จ่ายคงที่ '+money(fixed);
+$('priceBreakdown').innerHTML=[['ราคาที่ใช้ตรวจสอบ',money(sale)],['ราคาหลังส่วนลด',money(netSale)],['ต้นทุนสินค้า',money(cost)],['ค่าธรรมเนียมรวมโดยประมาณ',money(netSale*fees)],['ค่าใช้จ่ายคงที่',money(fixed)],['กำไรต่อชิ้น',money(profit)],['Margin จากราคาหลังส่วนลด',actual.toFixed(2)+'%']].map(x=>`<tr><td>${x[0]}</td><td class="num">${x[1]}</td></tr>`).join('');
+return {price,profit,actual}}
+$('calcPrice').onclick=pricing;$('savePrice').onclick=()=>{let r=pricing();db.products.push({sku:$('pName').value,name:$('pName').value,cost:num('pCost'),price:r.price});save();alert('บันทึกสินค้าแล้ว')};
+function calcTax(){let y=$('dashYear').value||String(new Date().getFullYear()),rev=sum('revenue',y,''),profit=rev-sum('cogs',y,'')-sum('expense',y,'');let taxable=Math.max(0,profit-num('lossCarry')),cit=0;
+if($('citMode').value==='sme'&&num('paidCapital')<=5000000&&rev<=30000000){cit=Math.max(0,Math.min(taxable-300000,2700000))*0.15+Math.max(0,taxable-3000000)*0.20}else cit=taxable*.20;
+let out=sum('outputvat',y,''),inp=sum('inputvat',y,''),vat=$('vatRegistered').value==='yes'?out-inp:0,due=Math.max(0,cit-num('taxCredit'));
+$('tProfit').textContent=money(profit);$('tCIT').textContent=money(cit);$('tVAT').textContent=money(vat);$('tDue').textContent=money(due);
+$('taxDetails').innerHTML=[['รายได้รวม',money(rev)],['ต้นทุนสินค้า',money(sum('cogs',y,''))],['ค่าใช้จ่ายดำเนินงาน',money(sum('expense',y,''))],['กำไรก่อนปรับปรุงภาษี',money(profit)],['ขาดทุนสะสมที่ระบุ',money(num('lossCarry'))],['ฐานกำไรประมาณการหลังหักขาดทุน',money(taxable)],['ภาษีเงินได้นิติบุคคลก่อนเครดิต',money(cit)],['เครดิตภาษีที่ระบุ',money(num('taxCredit'))],['ภาษีเงินได้นิติบุคคลคงเหลือ',money(due)],['ภาษีขายที่บันทึก',money(out)],['ภาษีซื้อที่บันทึก',money(inp)],['VAT สุทธิ (บวก=ต้องชำระ / ลบ=เครดิต)',money(vat)]].map(x=>`<tr><td>${x[0]}</td><td class="num">${x[1]}</td></tr>`).join('')}
+$('calcTax').onclick=calcTax;['paidCapital','vatRegistered','vatRate','citMode','taxCredit','lossCarry'].forEach(id=>$(id).onchange=calcTax);
+$('saveSettings').onclick=()=>{db.settings={company:$('companyName').value,taxId:$('taxId').value,fiscalStart:$('fiscalStart').value};save();alert('บันทึกแล้ว')};
+$('clearData').onclick=()=>{if(confirm('ลบข้อมูลทั้งหมดใน Browser นี้ถาวร? กรุณา Export Backup ก่อน')){db={records:[],products:[],settings:{}};save()}};
+function download(name,content,type='text/plain'){let a=document.createElement('a'),u=URL.createObjectURL(new Blob([content],{type}));a.href=u;a.download=name;a.click();URL.revokeObjectURL(u)}
+$('backupBtn').onclick=()=>download('business-finance-backup.json',JSON.stringify(db,null,2),'application/json');
+$('restoreInput').onchange=async e=>{try{let x=JSON.parse(await e.target.files[0].text());if(!x.records||!x.products)throw Error();if(confirm('Restore จะเขียนทับข้อมูลปัจจุบัน ต้องการดำเนินการ?')){db=x;save();alert('Restore สำเร็จ')}}catch(err){alert('ไฟล์ Backup ไม่ถูกต้อง')}};
+$('templateBtn').onclick=()=>download('finance-records-template.csv','date,type,desc,platform,amount\n2026-01-01,revenue,ตัวอย่างยอดขาย,TikTok Shop,10000\n2026-01-02,cogs,ต้นทุนสินค้า,TikTok Shop,5000\n2026-01-03,expense,ค่าโฆษณา,TikTok Shop,500\n','text/csv;charset=utf-8');
+$('importBtn').onclick=async()=>{let f=$('fileInput').files[0];if(!f){alert('เลือกไฟล์ก่อน');return}try{let rows;if(f.name.toLowerCase().endsWith('.csv')){let txt=await f.text();rows=csvParse(txt)}else{if(!window.XLSX)throw Error('ไม่สามารถโหลดตัวอ่าน Excel ได้ กรุณาใช้ CSV');let wb=XLSX.read(await f.arrayBuffer(),{type:'array',cellDates:true});rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''})}
+if(!rows.length)throw Error('ไม่พบข้อมูล');let count=0;
+if($('importType').value==='records'){rows.forEach(o=>{let get=k=>o[k]??o[k.toUpperCase()]??o[k[0].toUpperCase()+k.slice(1)]??'';let date=get('date');if(date instanceof Date)date=date.toISOString().slice(0,10);else if(typeof date==='number')date=new Date((date-25569)*86400000).toISOString().slice(0,10);let type=String(get('type')).toLowerCase().trim(),amount=Number(String(get('amount')).replace(/,/g,''));if(date&&typeName[type]&&Number.isFinite(amount)){db.records.push({date:String(date).slice(0,10),type,desc:String(get('desc')),platform:String(get('platform')||'ทั่วไป'),amount});count++}})}
+else{rows.forEach(o=>{let sku=o.SKU??o.sku??'',name=o.name??o.Name??o['ชื่อสินค้า']??'',cost=Number(o.cost??o.Cost??o['ต้นทุน']??0),price=Number(o.price??o.Price??o['ราคาขาย']??0);if(sku||name){db.products.push({sku:String(sku),name:String(name),cost,price});count++}})}
+save();$('importStatus').textContent=`นำเข้าสำเร็จ ${count} รายการ จาก ${rows.length} แถว`;if(!count)alert('ไม่พบแถวที่ตรงกับรูปแบบ Template')}catch(err){$('importStatus').textContent='นำเข้าไม่สำเร็จ: '+err.message;alert(err.message)}};
+function csvParse(text){let lines=text.replace(/^\uFEFF/,'').trim().split(/\r?\n/);let parse=s=>{let a=[],v='',q=false;for(let i=0;i<s.length;i++){let c=s[i];if(c==='"'&&q&&s[i+1]==='"'){v+='"';i++}else if(c==='"')q=!q;else if(c===','&&!q){a.push(v);v=''}else v+=c}a.push(v);return a};let h=parse(lines.shift());return lines.map(l=>{let a=parse(l),o={};h.forEach((k,i)=>o[k.trim()]=a[i]??'');return o})}
+render();pricing();
+</script></body></html>
